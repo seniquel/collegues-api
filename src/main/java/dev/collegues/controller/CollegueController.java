@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import dev.collegue.exception.CodeErreur;
+import dev.collegue.exception.CollegueNonTrouveException;
+import dev.collegue.exception.MessageErreur;
 import dev.collegues.entite.Collegue;
 import dev.collegues.service.CollegueService;
 
@@ -32,8 +35,15 @@ public class CollegueController {
 	
 	@GetMapping("{matricule}")
 	public ResponseEntity<List<Collegue>> getCollegueByMatricule(@PathVariable String matricule){
-		return ResponseEntity.status(HttpStatus.OK)
-				.body(service.getCollegues(matricule));
+		List<Collegue> collegues = service.getCollegues(matricule);
+		if(!collegues.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.OK)
+					.body(collegues);
+		}
+		else {
+			throw new CollegueNonTrouveException(new MessageErreur(CodeErreur.VALIDATION, "Ce collègue n'existe pas"));
+		}
+		
 	}
 
 }
