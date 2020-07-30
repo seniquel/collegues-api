@@ -21,4 +21,8 @@ public class CollegueService {
 		//return repo.findAll().stream().filter(c -> c.getNom() == nom).map(Collegue::getMatricule).collect(Collectors.toList());
 		return repo.findByNom(nom).stream().map(Collegue::getMatricule).collect(Collectors.toList());
 	}
+	
+	public List<Collegue> getCollegues(String matricule){
+		return repo.findByMatricule(matricule);
+	}
 }
