@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +23,7 @@ import dev.collegue.exception.MessageErreur;
 import dev.collegues.dto.CollegueDto;
 import dev.collegues.dto.CollegueMapper;
 import dev.collegues.dto.CreerCollegueDto;
+import dev.collegues.dto.UpdateCollegueDto;
 import dev.collegues.entite.Collegue;
 import dev.collegues.service.CollegueService;
 
@@ -66,5 +68,18 @@ public class CollegueController {
 		CollegueDto collegueDto = CollegueMapper.INSTANCE.collegueToCollegueDto(collegueCree);
 		return ResponseEntity.ok(collegueDto);
 	}
+	
+	@PatchMapping("{matricule}")
+	public ResponseEntity<?> patchCollegue(@RequestBody UpdateCollegueDto collegueDto, @PathVariable String matricule, BindingResult result){
+		List<Collegue> collegues = service.getCollegues(matricule);
+		if (result.hasErrors()) {
+			throw new CollegueException(new MessageErreur(CodeErreur.VALIDATION, "Données invalides pour la création d'un client"));
+		}
+		if(collegues.isEmpty()) {
+			throw new CollegueNonTrouveException(new MessageErreur(CodeErreur.VALIDATION, "Ce collègue n'existe pas"));
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(service.update(collegueDto, matricule));
+	}
+	
 
 }

@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import dev.collegues.dto.UpdateCollegueDto;
 import dev.collegues.entite.Collegue;
 import dev.collegues.repository.CollegueRepository;
 
@@ -36,5 +37,15 @@ public class CollegueService {
 		Collegue collegueSauvegarde = this.repo.save(collegue);
 		
 		return collegueSauvegarde;
+	}
+	
+	@Transactional
+	public Collegue update(UpdateCollegueDto collegueDto, String matricule) {
+		Collegue collegue = repo.findByMatricule(matricule).get(0);
+		collegue.setEmail(collegueDto.getEmail());
+		collegue.setPhotoUrl(collegueDto.getPhotoUrl());
+		repo.save(collegue);
+		
+		return collegue;
 	}
 }
