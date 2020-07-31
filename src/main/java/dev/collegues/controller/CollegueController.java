@@ -28,7 +28,7 @@ import dev.collegues.dto.UpdateCollegueDto;
 import dev.collegues.entite.Collegue;
 import dev.collegues.service.CollegueService;
 
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("collegues")
 public class CollegueController {
