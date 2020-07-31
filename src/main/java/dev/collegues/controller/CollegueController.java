@@ -62,7 +62,7 @@ public class CollegueController {
 			throw new CollegueException(new MessageErreur(CodeErreur.VALIDATION, "Données invalides pour la création d'un client"));
 		}
 		
-		Collegue collegueCree = service.creer(collegue.getMatricule(), collegue.getNom(), collegue.getPrenoms(), collegue.getEmail(), collegue.getDateDeNaissance(), collegue.getPhotoUrl());
+		Collegue collegueCree = service.creer(collegue.getNom(), collegue.getPrenoms(), collegue.getEmail(), collegue.getDateDeNaissance(), collegue.getPhotoUrl());
 		CollegueDto collegueDto = CollegueMapper.INSTANCE.collegueToCollegueDto(collegueCree);
 		return ResponseEntity.ok(collegueDto);
 	}

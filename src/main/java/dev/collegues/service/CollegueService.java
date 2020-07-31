@@ -29,9 +29,9 @@ public class CollegueService {
 	}
 	
 	@Transactional
-	public Collegue creer(String matricule, String nom, String prenoms, String email, LocalDate dateDeNaissance, String photoUrl) {
+	public Collegue creer(String nom, String prenoms, String email, LocalDate dateDeNaissance, String photoUrl) {
 	
-		Collegue collegue = new Collegue(matricule, nom, prenoms, email, dateDeNaissance, photoUrl);
+		Collegue collegue = new Collegue(nom, prenoms, email, dateDeNaissance, photoUrl);
 		
 		Collegue collegueSauvegarde = this.repo.save(collegue);
 		
