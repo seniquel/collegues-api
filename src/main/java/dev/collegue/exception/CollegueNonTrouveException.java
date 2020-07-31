@@ -1,15 +1,10 @@
 package dev.collegue.exception;
 
-public class CollegueNonTrouveException extends RuntimeException {
-	private MessageErreur messageErreur;
+public class CollegueNonTrouveException extends CollegueException {
 
 	public CollegueNonTrouveException(MessageErreur messageErreur) {
-		super(messageErreur.getMessage());
-		this.messageErreur = messageErreur;
+		super(messageErreur);
 	}
 
-	public MessageErreur getMessageErreur() {
-		return messageErreur;
-	}
 	
 }

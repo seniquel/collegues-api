@@ -2,17 +2,26 @@ package dev.collegues.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.collegue.exception.CodeErreur;
+import dev.collegue.exception.CollegueException;
 import dev.collegue.exception.CollegueNonTrouveException;
 import dev.collegue.exception.MessageErreur;
+import dev.collegues.dto.CollegueDto;
+import dev.collegues.dto.CollegueMapper;
+import dev.collegues.dto.CreerCollegueDto;
 import dev.collegues.entite.Collegue;
 import dev.collegues.service.CollegueService;
 
@@ -44,6 +53,18 @@ public class CollegueController {
 			throw new CollegueNonTrouveException(new MessageErreur(CodeErreur.VALIDATION, "Ce collègue n'existe pas"));
 		}
 		
+	}
+	
+	@PostMapping
+	public ResponseEntity<?> postCollegue(@RequestBody @Valid CreerCollegueDto collegue, BindingResult result) {
+		
+		if (result.hasErrors()) {
+			throw new CollegueException(new MessageErreur(CodeErreur.VALIDATION, "Données invalides pour la création d'un client"));
+		}
+		
+		Collegue collegueCree = service.creer(collegue.getMatricule(), collegue.getNom(), collegue.getPrenoms(), collegue.getEmail(), collegue.getDateDeNaissance(), collegue.getPhotoUrl());
+		CollegueDto collegueDto = CollegueMapper.INSTANCE.collegueToCollegueDto(collegueCree);
+		return ResponseEntity.ok(collegueDto);
 	}
 
 }
