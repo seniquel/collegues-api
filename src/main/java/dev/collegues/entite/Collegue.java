@@ -1,6 +1,7 @@
 package dev.collegues.entite;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,9 +26,9 @@ public class Collegue {
 	}
 
 	
-	public Collegue(String matricule, String nom, String prenoms, String email, LocalDate dateDeNaissance,
+	public Collegue(String nom, String prenoms, String email, LocalDate dateDeNaissance,
 			String photoUrl) {
-		this.matricule = matricule;
+		this.matricule = UUID.randomUUID().toString();
 		this.nom = nom;
 		this.prenoms = prenoms;
 		this.email = email;

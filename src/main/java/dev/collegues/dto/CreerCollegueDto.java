@@ -11,9 +11,6 @@ public class CreerCollegueDto {
 	
 	@NotNull
 	@NotBlank
-	private String matricule;
-	@NotNull
-	@NotBlank
 	@Size(min=2)
 	private String nom;
 	@NotNull
@@ -24,18 +21,6 @@ public class CreerCollegueDto {
 	private LocalDate dateDeNaissance;
 	private String photoUrl;
 	
-	/** Getter
-	 * @return the matricule
-	 */
-	public String getMatricule() {
-		return matricule;
-	}
-	/** Setter
-	 * @param matricule the matricule to set
-	 */
-	public void setMatricule(String matricule) {
-		this.matricule = matricule;
-	}
 	/** Getter
 	 * @return the nom
 	 */
