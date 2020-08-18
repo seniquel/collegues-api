@@ -1,12 +1,16 @@
 package dev.collegues.entite;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -21,6 +25,8 @@ public class Collegue {
 	private String email;
 	private LocalDate dateDeNaissance;
 	private String photoUrl;
+	@OneToMany(cascade = {CascadeType.ALL})
+	private List<Note> notes = new ArrayList<>();
 	
 	public Collegue() {
 	}
@@ -133,6 +139,26 @@ public class Collegue {
 	 */
 	public void setPhotoUrl(String photoUrl) {
 		this.photoUrl = photoUrl;
+	}
+
+
+	/** Getter
+	 * @return the notes
+	 */
+	public List<Note> getNotes() {
+		return notes;
+	}
+
+
+	/** Setter
+	 * @param notes the notes to set
+	 */
+	public void setNotes(List<Note> notes) {
+		this.notes = notes;
+	}
+	
+	public void addNote(Note note) {
+		this.notes.add(note);
 	}
 	
 	

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import dev.collegues.dto.CollegueGalerieDto;
 import dev.collegues.dto.UpdateCollegueDto;
 import dev.collegues.entite.Collegue;
+import dev.collegues.entite.Note;
 import dev.collegues.repository.CollegueRepository;
 
 @Service
@@ -36,6 +37,11 @@ public class CollegueService {
 				.collect(Collectors.toList());
 	}
 	
+	public List<Note> getNotes(String matricule){
+		return repo.findByMatricule(matricule).stream()
+				.findFirst().get().getNotes();
+	}
+	
 	@Transactional
 	public Collegue creer(String nom, String prenoms, String email, LocalDate dateDeNaissance, String photoUrl) {
 	
@@ -54,5 +60,14 @@ public class CollegueService {
 		repo.save(collegue);
 		
 		return collegue;
+	}
+	
+	@Transactional
+	public Note creerNote(String matricule, Note note) {
+		Collegue collegue = repo.findByMatricule(matricule).get(0);
+		collegue.addNote(note);
+		repo.save(collegue);
+		
+		return note;
 	}
 }

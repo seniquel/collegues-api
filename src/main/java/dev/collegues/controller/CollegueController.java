@@ -1,7 +1,6 @@
 package dev.collegues.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -28,6 +27,7 @@ import dev.collegues.dto.CollegueMapper;
 import dev.collegues.dto.CreerCollegueDto;
 import dev.collegues.dto.UpdateCollegueDto;
 import dev.collegues.entite.Collegue;
+import dev.collegues.entite.Note;
 import dev.collegues.service.CollegueService;
 
 @RestController
@@ -67,11 +67,17 @@ public class CollegueController {
 				.body(service.getGalerie());
 	}
 	
+	@GetMapping("{matricule}/notes")
+	public ResponseEntity<List<Note>> getNotes(@PathVariable String matricule) {	
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(service.getNotes(matricule));
+	}
+	
 	@PostMapping
 	public ResponseEntity<?> postCollegue(@RequestBody @Valid CreerCollegueDto collegue, BindingResult result) {
 		
 		if (result.hasErrors()) {
-			throw new CollegueException(new MessageErreur(CodeErreur.VALIDATION, "Données invalides pour la création d'un client"));
+			throw new CollegueException(new MessageErreur(CodeErreur.VALIDATION, "Données invalides pour la création d'un collègue"));
 		}
 		
 		Collegue collegueCree = service.creer(collegue.getNom(), collegue.getPrenoms(), collegue.getEmail(), collegue.getDateDeNaissance(), collegue.getPhotoUrl());
@@ -83,7 +89,7 @@ public class CollegueController {
 	public ResponseEntity<?> patchCollegue(@RequestBody UpdateCollegueDto collegueDto, @PathVariable String matricule, BindingResult result){
 		List<Collegue> collegues = service.getCollegues(matricule);
 		if (result.hasErrors()) {
-			throw new CollegueException(new MessageErreur(CodeErreur.VALIDATION, "Données invalides pour la création d'un client"));
+			throw new CollegueException(new MessageErreur(CodeErreur.VALIDATION, "Données invalides pour la modification d'un collègue"));
 		}
 		if(collegues.isEmpty()) {
 			throw new CollegueNonTrouveException(new MessageErreur(CodeErreur.VALIDATION, "Ce collègue n'existe pas"));
@@ -92,4 +98,15 @@ public class CollegueController {
 	}
 	
 
+	@PatchMapping("{matricule}/notes")
+	public ResponseEntity<?> addNoteCollegue(@RequestBody Note note, @PathVariable String matricule, BindingResult result){
+		List<Collegue> collegues = service.getCollegues(matricule);
+		if (result.hasErrors()) {
+			throw new CollegueException(new MessageErreur(CodeErreur.VALIDATION, "Données invalides pour la modification d'un collègue"));
+		}
+		if(collegues.isEmpty()) {
+			throw new CollegueNonTrouveException(new MessageErreur(CodeErreur.VALIDATION, "Ce collègue n'existe pas"));
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(service.creerNote(matricule, note));
+	}
 }
