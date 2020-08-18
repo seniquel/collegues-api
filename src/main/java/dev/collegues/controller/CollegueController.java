@@ -64,7 +64,7 @@ public class CollegueController {
 	@GetMapping("/photos")
 	public ResponseEntity<List<CollegueGalerieDto>> getGalerie() {	
 		return ResponseEntity.status(HttpStatus.OK)
-				.body(service.getGallerie());
+				.body(service.getGalerie());
 	}
 	
 	@PostMapping
