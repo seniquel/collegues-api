@@ -1,6 +1,7 @@
 package dev.collegues.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -22,14 +23,15 @@ import dev.collegue.exception.CollegueException;
 import dev.collegue.exception.CollegueNonTrouveException;
 import dev.collegue.exception.MessageErreur;
 import dev.collegues.dto.CollegueDto;
+import dev.collegues.dto.CollegueGallerieDto;
 import dev.collegues.dto.CollegueMapper;
 import dev.collegues.dto.CreerCollegueDto;
 import dev.collegues.dto.UpdateCollegueDto;
 import dev.collegues.entite.Collegue;
 import dev.collegues.service.CollegueService;
 
-@CrossOrigin(origins = "*")
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("collegues")
 public class CollegueController {
 	
@@ -57,6 +59,12 @@ public class CollegueController {
 			throw new CollegueNonTrouveException(new MessageErreur(CodeErreur.VALIDATION, "Ce collègue n'existe pas"));
 		}
 		
+	}
+	
+	@GetMapping("/photos")
+	public ResponseEntity<List<CollegueGallerieDto>> getGallerie() {	
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(service.getGallerie());
 	}
 	
 	@PostMapping
