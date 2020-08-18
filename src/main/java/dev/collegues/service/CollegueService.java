@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import dev.collegues.dto.CollegueGallerieDto;
+import dev.collegues.dto.CollegueGalerieDto;
 import dev.collegues.dto.UpdateCollegueDto;
 import dev.collegues.entite.Collegue;
 import dev.collegues.repository.CollegueRepository;
@@ -30,9 +30,9 @@ public class CollegueService {
 		return repo.findByMatricule(matricule);
 	}
 	
-	public List<CollegueGallerieDto> getGallerie(){
+	public List<CollegueGalerieDto> getGalerie(){
 		return repo.findAll().stream()
-				.map(c -> new CollegueGallerieDto(c.getMatricule(),c.getPhotoUrl()))
+				.map(c -> new CollegueGalerieDto(c.getMatricule(),c.getPhotoUrl()))
 				.collect(Collectors.toList());
 	}
 	

@@ -1,11 +1,11 @@
 package dev.collegues.dto;
 
-public class CollegueGallerieDto {
+public class CollegueGalerieDto {
 
 	private String matricule;
 	private String photoUrl;
 	
-	public CollegueGallerieDto(String matricule, String photoUrl) {
+	public CollegueGalerieDto(String matricule, String photoUrl) {
 		this.matricule = matricule;
 		this.photoUrl = photoUrl;
 	}

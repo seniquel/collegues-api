@@ -23,7 +23,7 @@ import dev.collegue.exception.CollegueException;
 import dev.collegue.exception.CollegueNonTrouveException;
 import dev.collegue.exception.MessageErreur;
 import dev.collegues.dto.CollegueDto;
-import dev.collegues.dto.CollegueGallerieDto;
+import dev.collegues.dto.CollegueGalerieDto;
 import dev.collegues.dto.CollegueMapper;
 import dev.collegues.dto.CreerCollegueDto;
 import dev.collegues.dto.UpdateCollegueDto;
@@ -62,7 +62,7 @@ public class CollegueController {
 	}
 	
 	@GetMapping("/photos")
-	public ResponseEntity<List<CollegueGallerieDto>> getGallerie() {	
+	public ResponseEntity<List<CollegueGalerieDto>> getGalerie() {	
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(service.getGallerie());
 	}
